@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    #region Variables
 
     public enum TouchStatus { None, Tap, Hold, Swipe };
     public TouchStatus currentTouchStatus;
@@ -19,7 +20,9 @@ public class PlayerInputHandler : MonoBehaviour
     public float touchDeadZone;
     public float tapToHoldTimeLimit;
 
+    #endregion
 
+    #region Methods
     void Start()
     {
         currentTouchStatus = TouchStatus.None;
@@ -39,7 +42,6 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (playerTouch.tapCount > 0)
         {
-
             if (playerTouch.phase == TouchPhase.Began && currentTouchStatus != TouchStatus.Swipe)
             {
                 currentTouchStatus = TouchStatus.Tap;
@@ -73,7 +75,7 @@ public class PlayerInputHandler : MonoBehaviour
         Vector2 heading = startpos - endPos;
         distance = heading.magnitude;
 
-        if(distance > 0)
+        if(distance > tapToHoldTimeLimit)
             direction = heading / distance;
     }
 
@@ -84,4 +86,6 @@ public class PlayerInputHandler : MonoBehaviour
         playerTouch = new Touch();
         currentTouchStatus = TouchStatus.None;
     }
+
+    #endregion
 }
