@@ -1078,13 +1078,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bfd90685563e4857b01b2ed75cc9506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Velocity: 5
   InputX: 0
   InputZ: 0
-  playerSpeed: 10
-  rotationSpeed: 3
-  velocity: 5
-  moveDirection: {x: 0, y: 0, z: 0}
+  desiredMoveDirection: {x: 0, y: 0, z: 0}
+  blockRotationPlayer: 0
+  desiredRotationSpeed: 0.5
+  anim: {fileID: 0}
+  Speed: 0
+  allowPlayerRotation: 0.5
+  cam: {fileID: 0}
+  controller: {fileID: 0}
   isGrounded: 0
+  HorizontalAnimSmoothTime: 0.2
+  VerticalAnimTime: 0.2
+  StartAnimTime: 0.3
+  StopAnimTime: 0.15
   verticalVel: 0
 --- !u!1 &1758631416814450999
 GameObject:

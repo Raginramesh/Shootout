@@ -4,38 +4,49 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    PlayerInputHandler m_InputHandler;
-    CharacterController m_Controller;
-    Animator m_anime;
+    public float Velocity = 5f;
 
     public float InputX;
     public float InputZ;
-    public float playerSpeed;
-    public float rotationSpeed;
-    public float velocity;
-
-    public Vector3 moveDirection;
-
+    public Vector3 desiredMoveDirection;
+    public bool blockRotationPlayer;
+    public float desiredRotationSpeed = 0.1f;
+    public Animator anim;
+    public float Speed;
+    public float allowPlayerRotation = 0.1f;
+    public Camera cam;
+    public CharacterController controller;
     public bool isGrounded;
 
-    public float verticalVel;
+    [Header("Animation Smoothing")]
+    [Range(0, 1f)]
+    public float HorizontalAnimSmoothTime = 0.2f;
+    [Range(0, 1f)]
+    public float VerticalAnimTime = 0.2f;
+    [Range(0, 1f)]
+    public float StartAnimTime = 0.3f;
+    [Range(0, 1f)]
+    public float StopAnimTime = 0.15f;
+
+    public float verticalVel = -0.5f;
     private Vector3 moveVector;
+    PlayerInputHandler m_InputHandler;
 
-
-    // Start is called before the first frame update
+    // Use this for initialization
     void Start()
     {
+        anim = this.GetComponent<Animator>();
+        cam = Camera.main;
+        controller = this.GetComponent<CharacterController>();
         m_InputHandler = this.GetComponent<PlayerInputHandler>();
-        m_Controller = this.GetComponent<CharacterController>();
-        m_anime = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerMoveAndRotate();
+        InputMagnitude();
 
-        isGrounded = m_Controller.isGrounded;
+        isGrounded = controller.isGrounded;
         if (isGrounded)
         {
             verticalVel -= 0;
@@ -45,20 +56,86 @@ public class PlayerController : MonoBehaviour
             verticalVel -= 1;
         }
         moveVector = new Vector3(0, verticalVel * .2f * Time.deltaTime, 0);
-        m_Controller.Move(moveVector);
+        controller.Move(moveVector);
+
+
     }
 
-    private void PlayerMoveAndRotate()
+    void PlayerMoveAndRotation()
     {
-        if (m_InputHandler.currentTouchStatus == PlayerInputHandler.TouchStatus.Swipe)
+        //if (m_InputHandler.currentTouchStatus == PlayerInputHandler.TouchStatus.Swipe)
         {
-            InputX = m_InputHandler.direction.x;
-            InputZ = m_InputHandler.direction.y;
+            InputX = Input.GetAxis("Horizontal");
+            InputZ = Input.GetAxis("Vertical");
 
-            moveDirection = Vector3.forward * -InputZ + Vector3.right * -InputX;
+            //InputX = m_InputHandler.direction.x;
+            //InputZ = m_InputHandler.direction.y;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), rotationSpeed);
-            m_Controller.Move(moveDirection * Time.deltaTime * velocity);
+            var camera = Camera.main;
+            var forward = cam.transform.forward;
+            var right = cam.transform.right;
+
+            forward.y = 0f;
+            right.y = 0f;
+
+            forward.Normalize();
+            right.Normalize();
+
+
+            desiredMoveDirection = forward * InputZ + right * InputX;
+        
+
+            if (blockRotationPlayer == false)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), desiredRotationSpeed);
+                controller.Move(desiredMoveDirection * Time.deltaTime * Velocity);
+            }
+        }
+        
+    }
+
+    public void LookAt(Vector3 pos)
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(pos), desiredRotationSpeed);
+    }
+
+    public void RotateToCamera(Transform t)
+    {
+
+        var camera = Camera.main;
+        var forward = cam.transform.forward;
+        var right = cam.transform.right;
+
+        desiredMoveDirection = forward;
+
+        t.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), desiredRotationSpeed);
+    }
+
+    void InputMagnitude()
+    {
+        //Calculate Input Vectors
+        InputX = Input.GetAxis("Horizontal");
+        InputZ = Input.GetAxis("Vertical");
+
+        //InputX = m_InputHandler.direction.x;
+        //InputZ = m_InputHandler.direction.y;
+
+        //anim.SetFloat ("InputZ", InputZ, VerticalAnimTime, Time.deltaTime * 2f);
+        //anim.SetFloat ("InputX", InputX, HorizontalAnimSmoothTime, Time.deltaTime * 2f);
+
+        //Calculate the Input Magnitude
+        Speed = new Vector2(InputX, InputZ).sqrMagnitude;
+
+        //Physically move player
+
+        if (Speed > allowPlayerRotation)
+        {
+            anim.SetFloat("Blend", Speed, StartAnimTime, Time.deltaTime);
+            PlayerMoveAndRotation();
+        }
+        else if (Speed < allowPlayerRotation)
+        {
+            anim.SetFloat("Blend", Speed, StopAnimTime, Time.deltaTime);
         }
     }
 }

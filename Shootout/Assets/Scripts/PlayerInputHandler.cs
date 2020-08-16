@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    #region Variables
-
     public enum TouchStatus { None, Tap, Hold, Swipe };
     public TouchStatus currentTouchStatus;
     Touch playerTouch;
@@ -20,9 +18,7 @@ public class PlayerInputHandler : MonoBehaviour
     public float touchDeadZone;
     public float tapToHoldTimeLimit;
 
-    #endregion
-
-    #region Methods
+    
     void Start()
     {
         currentTouchStatus = TouchStatus.None;
@@ -86,6 +82,4 @@ public class PlayerInputHandler : MonoBehaviour
         playerTouch = new Touch();
         currentTouchStatus = TouchStatus.None;
     }
-
-    #endregion
 }
