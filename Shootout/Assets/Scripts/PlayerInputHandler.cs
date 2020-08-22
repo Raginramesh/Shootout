@@ -34,7 +34,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void GetTouchInput()
     {
-        playerTouch = Input.GetTouch(0);
+        //playerTouch = Input.GetTouch(0);
 
         if (playerTouch.tapCount > 0)
         {
