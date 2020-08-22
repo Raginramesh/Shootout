@@ -19,7 +19,7 @@ public class WeaponManager : MonoBehaviour
     private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
     private float nextFire;
 
-    PlayerInputHandler m_InputHandler;
+    public PlayerInputHandler m_InputHandler;
     public Camera cam;
 
     void Start()
@@ -32,7 +32,8 @@ public class WeaponManager : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
+        //if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
+        if (m_InputHandler.currentTouchStatus == PlayerInputHandler.TouchStatus.Tap && Time.time > nextFire)
         {
             Debug.Log("Fire");
             // Update the time when our player can fire next

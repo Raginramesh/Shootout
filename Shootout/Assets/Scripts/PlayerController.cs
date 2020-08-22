@@ -63,13 +63,13 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMoveAndRotation()
     {
-        //if (m_InputHandler.currentTouchStatus == PlayerInputHandler.TouchStatus.Swipe)
+        if (m_InputHandler.currentTouchStatus == PlayerInputHandler.TouchStatus.Swipe)
         {
-            InputX = Input.GetAxis("Horizontal");
-            InputZ = Input.GetAxis("Vertical");
+            //InputX = Input.GetAxis("Horizontal");
+            //InputZ = Input.GetAxis("Vertical");
 
-            //InputX = m_InputHandler.direction.x;
-            //InputZ = m_InputHandler.direction.y;
+            InputX = m_InputHandler.direction.x;
+            InputZ = m_InputHandler.direction.y;
 
             var camera = Camera.main;
             var forward = cam.transform.forward;
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
             right.Normalize();
 
 
-            desiredMoveDirection = forward * InputZ + right * InputX;
+            desiredMoveDirection = forward * -InputZ + right * -InputX;
         
 
             if (blockRotationPlayer == false)
@@ -114,11 +114,11 @@ public class PlayerController : MonoBehaviour
     void InputMagnitude()
     {
         //Calculate Input Vectors
-        InputX = Input.GetAxis("Horizontal");
-        InputZ = Input.GetAxis("Vertical");
+        //InputX = Input.GetAxis("Horizontal");
+        //InputZ = Input.GetAxis("Vertical");
 
-        //InputX = m_InputHandler.direction.x;
-        //InputZ = m_InputHandler.direction.y;
+        InputX = m_InputHandler.direction.x;
+        InputZ = m_InputHandler.direction.y;
 
         //anim.SetFloat ("InputZ", InputZ, VerticalAnimTime, Time.deltaTime * 2f);
         //anim.SetFloat ("InputX", InputX, HorizontalAnimSmoothTime, Time.deltaTime * 2f);
