@@ -56,23 +56,23 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 14670}
+      Script: {instanceID: 11208}
     - Class: 114
-      Script: {instanceID: 14872}
+      Script: {instanceID: 11444}
     - Class: 114
-      Script: {instanceID: 14942}
+      Script: {instanceID: 11514}
     - Class: 114
-      Script: {instanceID: 15440}
+      Script: {instanceID: 12016}
     - Class: 114
-      Script: {instanceID: 15472}
+      Script: {instanceID: 12048}
     - Class: 114
-      Script: {instanceID: 15636}
+      Script: {instanceID: 12216}
     - Class: 114
-      Script: {instanceID: 15944}
+      Script: {instanceID: 12524}
     - Class: 114
-      Script: {instanceID: 16660}
+      Script: {instanceID: 13262}
     - Class: 114
-      Script: {instanceID: 17128}
+      Script: {instanceID: 13734}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -96,16 +96,16 @@ ScriptsOnlyBuild:
   scriptHashData:
   - hash:
       serializedVersion: 2
-      Hash: a1f19ad47d3094e235f21b74dfc423a8
-    assemblyName: Unity.Postprocessing.Runtime.dll
-    namespaceName: UnityEngine.Rendering.PostProcessing
-    className: PostProcessLayer
-  - hash:
-      serializedVersion: 2
       Hash: 4bc4346a71a8df53a6b106f68ef3a190
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: CanvasScaler
+  - hash:
+      serializedVersion: 2
+      Hash: a1f19ad47d3094e235f21b74dfc423a8
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: PostProcessLayer
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f

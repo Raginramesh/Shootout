@@ -32,8 +32,20 @@ public class WeaponManager : MonoBehaviour
     
     void Update()
     {
+        if(autoShoot)
+        {
+            Shoot();
+        }
+        else if(m_InputHandler.currentTouchStatus == PlayerInputHandler.TouchStatus.Tap)
+        {
+            Shoot();
+        }
+    }
+
+    public void Shoot()
+    {
         //if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
-        if (m_InputHandler.currentTouchStatus == PlayerInputHandler.TouchStatus.Tap && Time.time > nextFire)
+        if (Time.time > nextFire)
         {
             Debug.Log("Fire");
             // Update the time when our player can fire next
